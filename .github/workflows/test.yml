@@ -1,0 +1,24 @@
+name: Tests
+on:
+  push:
+    branches:
+      - '*'
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-2019
+          - windows-2022
+          - ubuntu-latest
+          - macos-12
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo new --lib not_in_workspace
+      - run: echo "[workspace]" >> not_in_workspace/Cargo.toml
+      - run: cargo build
+        working-directory: not_in_workspace
