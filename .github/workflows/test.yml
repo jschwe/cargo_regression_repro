@@ -18,7 +18,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo new --lib not_in_workspace
-      - run: echo "[workspace]" >> not_in_workspace/Cargo.toml
-      - run: cargo build
-        working-directory: not_in_workspace
+      - run: cargo rustc -- --print=native-static-libs
+        working-directory: member1
